@@ -17,7 +17,7 @@ $query = "SELECT o.id, o.order_date, c.first_name, c.last_name, COUNT(oi.id) as 
           ORDER BY o.order_date DESC";
 
 $result = $conn->query($query);
-?>
+?>  
 
 <!DOCTYPE html>
 <html lang="en">

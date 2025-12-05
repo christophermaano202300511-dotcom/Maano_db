@@ -2,7 +2,6 @@
 session_start();
 include 'database.php';
 
-// Display success or error messages
 $message = '';
 if (isset($_SESSION['success'])) {
     $message = '<div class="success">' . $_SESSION['success'] . '</div>';
@@ -13,7 +12,7 @@ if (isset($_SESSION['error'])) {
     unset($_SESSION['error']);
 }
 
-// Fetch products with category names using JOIN
+
 $query = "SELECT p.id, p.product_name, p.description, p.price, c.category_name 
           FROM products p
           JOIN categories c ON p.category_id = c.id
