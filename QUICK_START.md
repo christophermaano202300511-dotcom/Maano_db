@@ -1,130 +1,168 @@
-# Quick Start Guide - Maano Database Project
+# 🚀 Quick Start Guide - Delator Electric Bill Calculator
 
-## 🚀 Get Started in 5 Minutes
+## Getting Started in 30 Seconds
 
-### 1. Copy Project to XAMPP
-```
-Copy all files from Maano_db folder to:
-C:\xampp\htdocs\maano_db\
-```
+### Step 1: Open the Application
+1. Navigate to your project folder: `delator-electric-bill-calculator`
+2. Right-click on `index.html`
+3. Select "Open with" → Choose your browser (Chrome, Firefox, Safari, or Edge)
+4. **OR** Simply double-click `index.html`
 
-### 2. Start Services
-- Open XAMPP Control Panel
-- Click "Start" on Apache
-- Click "Start" on MySQL
-- Wait for green indicators
+### Step 2: Explore the Application
 
-### 3. Create Database
-- Go to: http://localhost/phpmyadmin/
-- Click "SQL" tab
-- Paste contents of `setup_database.sql`
-- Click "Go"
+#### First Time? Register!
+- Click "Create Account" on the login page
+- Fill in your details:
+  - Full Name
+  - Email Address
+  - Phone Number
+  - Address
+  - Password (min 6 characters)
+- Click "Create Account"
 
-### 4. Run Application
-- Open: http://localhost/maano_db/
-- Click "Add Product" to start using the app
+#### Already Registered? Login!
+- Enter your email and password
+- Check "Remember me" if you want
+- Click "Login"
 
-## 📁 Project Files Overview
+### Step 3: Calculate Your First Bill
 
-| File | Purpose |
-|------|---------|
-| `database.php` | MySQL connection |
-| `index.php` | Products list (main page) |
-| `add_product.php` | Add new product form |
-| `edit_product.php` | Edit product form |
-| `delete_product.php` | Delete product script |
-| `manage_categories.php` | View all categories |
-| `add_category.php` | Add category script |
-| `edit_category.php` | Edit category form |
-| `delete_category.php` | Delete category script |
-| `manage_customers.php` | View all customers |
-| `add_customer.php` | Add customer script |
-| `edit_customer.php` | Edit customer form |
-| `delete_customer.php` | Delete customer script |
-| `view_orders.php` | View all orders (with JOINs) |
-| `create_order.php` | Create new order form |
-| `view_order_details.php` | View single order (with JOINs) |
-| `delete_order.php` | Delete order script |
-| `style.css` | Application styling |
-| `setup_database.sql` | Database creation script |
+1. From the home page or navbar, click "Calculator"
+2. Fill in the form:
+   - **kWh Consumption**: Enter how much electricity you used (e.g., 350)
+   - **Cost per kWh**: Enter the rate (default is ₱12.50)
+   - **Month**: Select the billing month
+   - **Reference Number**: Your bill reference (e.g., #REF001)
+3. Click "Calculate Bill"
+4. See your total amount due
+5. Click "Save Bill" to add it to your history
 
-## 🔗 Database Relationships
+### Step 4: View Your Dashboard
 
-```
-categories (1) ──→ (Many) products
-customers  (1) ──→ (Many) orders
-orders     (1) ──→ (Many) order_items ←─ (Many) products
-```
+- Click "Dashboard" from the navbar
+- See your total consumption statistics
+- View recent bills in a table format
+- Click "View All Bills" to see complete history
 
-## 💾 Key SQL JOIN Queries
+### Step 5: Filter Your Bills
 
-**Products with Categories:**
-```sql
-SELECT p.*, c.category_name 
-FROM products p
-JOIN categories c ON p.category_id = c.id
-```
+- Go to "Results" page (or "View All Bills")
+- Use filters:
+  - Filter by Month
+  - Filter by Year
+  - Filter by Payment Status
+- Click "Apply Filter"
+- See filtered results in the table
 
-**Orders with Customers:**
-```sql
-SELECT o.*, c.first_name, c.last_name
-FROM orders o
-JOIN customers c ON o.customer_id = c.id
-```
+### Step 6: Manage Your Profile
 
-**Order Details (3-way JOIN):**
-```sql
-SELECT oi.*, p.product_name, o.order_date, c.first_name
-FROM order_items oi
-JOIN products p ON oi.product_id = p.id
-JOIN orders o ON oi.order_id = o.id
-JOIN customers c ON o.customer_id = c.id
-```
+- Click the dropdown menu at top-right
+- Select "My Profile"
+- Update your information
+- Change your password
+- Click "Save Changes"
 
-## ✅ CRUD Operations Implemented
+## 📱 Mobile Users
 
-- ✅ **CREATE:** Add products, categories, customers, orders
-- ✅ **READ:** View all items with JOIN operations
-- ✅ **UPDATE:** Edit products, categories, customers
-- ✅ **DELETE:** Remove items with validation
-- ✅ **JOIN:** Related data displayed together
-- ✅ **VALIDATION:** Input checking and error handling
-- ✅ **SECURITY:** SQL injection prevention, XSS protection
+The app works great on smartphones!
+- All features are responsive
+- Touch-friendly buttons
+- Optimized for small screens
 
-## 🎯 Navigation
+## 💾 Important Information
 
-All pages have a navigation bar with links to:
-- Products (main list)
-- Categories management
-- Customers management
-- Orders management
-- + Add Product (quick link)
+### Your Data is Saved Locally
+- All your bills and profile info are stored in your browser
+- Nothing is sent to external servers
+- Data persists even after closing the browser
+- **If you clear browser cache, your data will be deleted!**
 
-## 🐛 Common Issues & Solutions
+### Make Backups
+- Export your data regularly
+- Screenshot important bills
+- Keep reference numbers safe
 
-| Issue | Solution |
-|-------|----------|
-| Can't access phpmyadmin | Start MySQL in XAMPP |
-| Pages show blank | Run `setup_database.sql` |
-| Can't connect to database | Check MySQL credentials in `database.php` |
-| 404 errors | Verify files in `C:\xampp\htdocs\maano_db\` |
+## 🎨 Tips & Tricks
 
-## 📝 Default Database Credentials
+### Keyboard Shortcuts
+- Press `Tab` to navigate through form fields
+- Press `Enter` to submit forms
 
-- **Host:** localhost
-- **Username:** root
-- **Password:** (empty)
-- **Database:** maano_db
+### Faster Calculations
+- The cost per kWh defaults to ₱12.50 (Philippine rate)
+- Change it once and save - it remembers your preference!
 
-## 🔒 Security Features
+### Smart Filtering
+- Use month filter for specific months
+- Use year filter to see a year's history
+- Use status filter to track paid/unpaid bills
 
-✓ SQL Injection Prevention (Prepared Statements)
-✓ XSS Prevention (htmlspecialchars)
-✓ Foreign Key Constraints
-✓ Input Validation
-✓ Delete Confirmations
-✓ Transaction Support for Orders
+### Bill Management
+- Bills are automatically numbered in sequence
+- Reference numbers help track bills over time
+- Payment status is stored with each bill
+
+## ❓ Frequently Asked Questions
+
+### Q: Where is my data saved?
+**A:** In your browser's localStorage. No internet connection needed, but data is device-specific.
+
+### Q: Can I use this on multiple devices?
+**A:** No, your data is only on one device. For multi-device sync, use cloud backup or a backend version.
+
+### Q: What if I forget my password?
+**A:** Click "Forgot password?" on the login page (currently shows alert - will be implemented in future).
+
+### Q: Can I export my bills?
+**A:** Currently, you can view and print bills from the Results page. Future versions will have PDF export.
+
+### Q: Is my data secure?
+**A:** Your data is stored locally and never sent to any server, making it very secure from external threats. However, anyone with access to your device can see it.
+
+## 🔧 Troubleshooting
+
+### App won't open
+- Ensure you're opening `index.html` (not index.php)
+- Try a different browser
+- Clear browser cache and reload
+
+### Bills not saving
+- Check browser's localStorage is enabled
+- Look for browser console errors (F12 → Console)
+- Try a different browser
+
+### Data disappeared
+- Browser cache was cleared
+- Cookies were deleted
+- Try another browser where you might have logged in before
+
+### Forgot login credentials
+- There's no "forgot password" function yet
+- You need to use the same email/password you registered with
+- If lost, clear localStorage and register again
+
+## 🎓 What to Try Next
+
+1. **Calculate Multiple Bills**: Add bills for different months
+2. **Test Filters**: Try filtering by year or payment status
+3. **Update Profile**: Change your phone number or address
+4. **Change Password**: Test the security features
+5. **Try on Mobile**: See the responsive design in action
+
+## 📚 File Guide
+
+If you want to customize:
+- **`index.html`** - Home page
+- **`style.css`** - All colors and fonts
+- **`script.js`** - All functionality
+- **`calculator.html`** - Bill calculator page
+
+## 🌟 You're Ready!
+
+Enjoy using **Delator** - Your Personal Electric Bill Calculator! 
+
+For detailed information, see **README.md**
 
 ---
 
-**Need help?** Check the full `README.md` for detailed documentation.
+**Need Help?** Review the code comments in `script.js` for detailed function documentation.

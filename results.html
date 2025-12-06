@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Delator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Pirata+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark glass-nav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-lightning-charge"></i> Delator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="calculator.html">Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="results.html">Results</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> Account
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="login.html">Login</a></li>
+                            <li><a class="dropdown-item" href="register.html">Register</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Results Section -->
+    <section class="results-section py-5">
+        <div class="container">
+            <h2 class="mb-4">Bill History & Results</h2>
+            
+            <!-- Filters -->
+            <div class="glass-card p-4 mb-4">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="filterMonth" class="form-label">Filter by Month</label>
+                        <input type="month" class="form-control input-glass" id="filterMonth">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="filterYear" class="form-label">Filter by Year</label>
+                        <select class="form-select input-glass" id="filterYear">
+                            <option value="">All Years</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button class="btn btn-primary w-100" onclick="applyFilters()">
+                            <i class="bi bi-funnel"></i> Apply Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="glass-card p-4">
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover">
+                        <thead>
+                            <tr>
+                                <th>Month/Year</th>
+                                <th>kWh</th>
+                                <th>Cost/kWh</th>
+                                <th>Total Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody">
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">No bills found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer glass-footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2025 Delator Electric Bill Calculator. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-light"><i class="bi bi-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAllBills();
+        });
+
+        function loadAllBills() {
+            const bills = JSON.parse(localStorage.getItem('bills')) || [];
+            const tableBody = document.getElementById('resultsTableBody');
+
+            if (bills.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No bills found</td></tr>';
+                return;
+            }
+
+            // Sort by month (newest first)
+            bills.sort((a, b) => new Date(b.month) - new Date(a.month));
+
+            tableBody.innerHTML = bills.map(bill => `
+                <tr>
+                    <td>${formatMonth(bill.month)}</td>
+                    <td>${bill.kwh.toFixed(2)}</td>
+                    <td>₱${bill.costPerKwh.toFixed(2)}</td>
+                    <td><strong>₱${bill.totalBill.toFixed(2)}</strong></td>
+                    <td><button class="btn btn-sm btn-danger" onclick="deleteBill(${bill.id})">Delete</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const filterMonth = document.getElementById('filterMonth').value;
+            const filterYear = document.getElementById('filterYear').value;
+            const bills = JSON.parse(localStorage.getItem('bills')) || [];
+
+            let filteredBills = bills.filter(bill => {
+                let monthMatch = true;
+                let yearMatch = true;
+
+                if (filterMonth) {
+                    monthMatch = bill.month === filterMonth;
+                }
+
+                if (filterYear) {
+                    const billYear = bill.month.split('-')[0];
+                    yearMatch = billYear === filterYear;
+                }
+
+                return monthMatch && yearMatch;
+            });
+
+            const tableBody = document.getElementById('resultsTableBody');
+
+            if (filteredBills.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No bills found</td></tr>';
+                return;
+            }
+
+            filteredBills.sort((a, b) => new Date(b.month) - new Date(a.month));
+
+            tableBody.innerHTML = filteredBills.map(bill => `
+                <tr>
+                    <td>${formatMonth(bill.month)}</td>
+                    <td>${bill.kwh.toFixed(2)}</td>
+                    <td>₱${bill.costPerKwh.toFixed(2)}</td>
+                    <td><strong>₱${bill.totalBill.toFixed(2)}</strong></td>
+                    <td><button class="btn btn-sm btn-danger" onclick="deleteBill(${bill.id})">Delete</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function deleteBill(billId) {
+            if (!confirm('Delete this bill?')) return;
+            
+            let bills = JSON.parse(localStorage.getItem('bills')) || [];
+            bills = bills.filter(b => b.id !== billId);
+            localStorage.setItem('bills', JSON.stringify(bills));
+            loadAllBills();
+        }
+
+        function formatMonth(monthString) {
+            const date = new Date(monthString + '-01');
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+        }
+    </script>
+</body>
+</html>

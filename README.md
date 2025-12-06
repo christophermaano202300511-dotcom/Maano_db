@@ -1,230 +1,203 @@
-# Maano Database Project - Complete Setup Guide
+# ⚡ Delator - Electric Bill Calculator
 
-## Overview
-This is a full CRUD (Create, Read, Update, Delete) application with JOIN operations for managing products, categories, customers, and orders.
+A modern, responsive web application for calculating and managing electricity bills with an elegant glass-morphism design.
 
-## Prerequisites
-- XAMPP installed (or Apache + MySQL separately)
-- PHP 7.0 or higher
-- Modern web browser
+## 🎯 Features
 
-## Step 1: Install XAMPP
+- **Bill Calculator**: Quick and easy bill calculation based on kWh consumption
+- **User Authentication**: Register and login system
+- **Dashboard**: View personalized dashboard with consumption statistics
+- **Bill History**: Track all bills with advanced filtering options
+- **Profile Management**: Edit user information and change password
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- **Modern UI**: Glass-morphism design with smooth animations
+- **Local Storage**: Client-side data persistence without backend requirements
 
-1. Download XAMPP from: https://www.apachefriends.org/
-2. Run the installer and choose installation directory (e.g., `C:\xampp`)
-3. Install Apache and MySQL modules
-4. Complete the installation
-
-## Step 2: Place Project Files
-
-1. Locate your XAMPP installation folder (typically `C:\xampp`)
-2. Navigate to the `htdocs` folder
-3. Create a new folder named `maano_db` (or your preferred name)
-4. Copy all files from this project into that folder
-
-**Example path:** `C:\xampp\htdocs\maano_db\`
-
-## Step 3: Start XAMPP Services
-
-1. Open XAMPP Control Panel
-2. Click "Start" for **Apache** module
-3. Click "Start" for **MySQL** module
-4. Wait for both to show as running (green indicator)
-
-## Step 4: Create the Database
-
-### Method 1: Using phpMyAdmin (GUI)
-
-1. Open web browser and go to: `http://localhost/phpmyadmin/`
-2. Click on "SQL" tab in the top menu
-3. Copy and paste the entire contents of `setup_database.sql` file
-4. Click "Go" to execute
-
-### Method 2: Using Command Line
-
-1. Open Command Prompt
-2. Navigate to your XAMPP MySQL bin folder:
-   ```
-   cd C:\xampp\mysql\bin
-   ```
-3. Connect to MySQL:
-   ```
-   mysql -u root -p
-   ```
-   (Press Enter when prompted for password - default XAMPP password is empty)
-4. Paste the contents of `setup_database.sql` and execute
-
-## Step 5: Verify Database Connection
-
-1. Update `database.php` if needed (default settings should work):
-   - `$servername = "localhost"`
-   - `$username = "root"`
-   - `$password = ""` (empty for default XAMPP)
-   - `$database = "maano_db"`
-
-## Step 6: Access the Application
-
-1. Open your web browser
-2. Go to: `http://localhost/maano_db/`
-3. You should see the Maano Database System homepage with the products list
-
-## File Structure
+## 📁 Project Structure
 
 ```
-maano_db/
-├── database.php              # Database connection file
-├── style.css                 # Main stylesheet
-├── index.php                 # Products list (READ with JOIN)
-├── add_product.php           # Add new product (CREATE)
-├── edit_product.php          # Edit product (UPDATE)
-├── delete_product.php        # Delete product (DELETE)
-├── manage_categories.php     # View/manage categories
-├── add_category.php          # Add category (CREATE)
-├── edit_category.php         # Edit category (UPDATE)
-├── delete_category.php       # Delete category (DELETE)
-├── manage_customers.php      # View/manage customers
-├── add_customer.php          # Add customer (CREATE)
-├── edit_customer.php         # Edit customer (UPDATE)
-├── delete_customer.php       # Delete customer (DELETE)
-├── view_orders.php           # View all orders (READ with JOIN)
-├── create_order.php          # Create new order (CREATE)
-├── view_order_details.php    # View order details (READ with JOIN)
-├── delete_order.php          # Delete order (DELETE)
-├── setup_database.sql        # SQL script to create database and tables
-└── README.md                 # This file
+delator-electric-bill-calculator/
+├── index.html          # Home page
+├── calculator.html     # Bill calculator page
+├── dashboard.html      # User dashboard
+├── results.html        # Bill history and results
+├── login.html          # Login page
+├── register.html       # Registration page
+├── profile.html        # User profile page
+├── style.css           # Global styles (glass-morphism design)
+├── script.js           # JavaScript functionality
+└── README.md           # This file
 ```
 
-## Database Structure
+## 🚀 Getting Started
 
-### Tables and Relationships
+### Prerequisites
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+- No server or database required (runs entirely on the client)
 
-**categories**
-- id (Primary Key)
-- category_name (Unique)
-- description
-- created_at
+### Installation
 
-**products** (One-to-Many with categories)
-- id (Primary Key)
-- product_name
-- description
-- price
-- category_id (Foreign Key → categories.id)
-- created_at
+1. **Clone or Download** the project files
+2. **Open in Browser**: Simply open `index.html` in your web browser
+3. **No Installation Needed**: The application runs entirely in the browser
 
-**customers**
-- id (Primary Key)
-- first_name
-- last_name
-- email
-- phone
-- address
-- created_at
+### Usage
 
-**orders** (One-to-Many with customers)
-- id (Primary Key)
-- customer_id (Foreign Key → customers.id)
-- order_date
-- created_at
+#### Home Page (`index.html`)
+- Overview of the application
+- Quick navigation to calculator
+- Feature highlights
 
-**order_items** (Junction table between orders and products)
-- id (Primary Key)
-- order_id (Foreign Key → orders.id)
-- product_id (Foreign Key → products.id)
-- quantity
-- price
-- created_at
+#### Calculator (`calculator.html`)
+1. Enter your kWh consumption
+2. Set the cost per kWh (default: ₱12.50)
+3. Select the billing month
+4. Add a reference number
+5. Click "Calculate Bill"
+6. Save the bill to history
 
-## Features Implemented
+#### Dashboard (`dashboard.html`)
+- View total consumption statistics
+- See total amount paid
+- View monthly average consumption
+- Quick access to recent bills
 
-### 1. Products Management
-- **Create:** Add new products with category selection
-- **Read:** Display products with category names using JOIN
-- **Update:** Edit product details
-- **Delete:** Remove products
+#### Bill Results (`results.html`)
+- View complete bill history
+- Filter by month, year, and payment status
+- View individual bill details
+- Track payment status
 
-### 2. Categories Management
-- **Create:** Add new categories
-- **Read:** Display all categories
-- **Update:** Edit category information
-- **Delete:** Remove categories (with validation)
+#### Login/Register
+- Create a new account
+- Secure login with email and password
+- "Remember me" option for faster login
 
-### 3. Customers Management
-- **Create:** Add new customers
-- **Read:** Display all customers
-- **Update:** Edit customer details
-- **Delete:** Remove customers
+#### Profile (`profile.html`)
+- Edit personal information
+- Change password
+- View account statistics
 
-### 4. Orders Management
-- **Create:** Create orders with multiple products
-- **Read:** Display orders with customer names (JOIN)
-- **Read Details:** View order details with product information (JOIN)
-- **Delete:** Remove orders
+## 🎨 Design Features
 
-## SQL JOIN Examples Used
+### Color Scheme
+- **Primary Color**: Dark Red (#6e1411)
+- **Accent Color**: Coral Red (#ff6b6b)
+- **Background**: Dark Gradient (Black to Dark Gray)
+- **Text**: White and Light Gray
 
-### 1. Products with Categories
-```sql
-SELECT p.id, p.product_name, p.price, c.category_name 
-FROM products p
-JOIN categories c ON p.category_id = c.id
+### Typography
+- **Header Font**: Pirata One (decorative)
+- **Body Font**: Montserrat (modern, clean)
+
+### UI Elements
+- Glass-morphism cards with blur effects
+- Smooth animations and transitions
+- Responsive grid layouts
+- Bootstrap 5.3 for components
+- Bootstrap Icons for visual elements
+
+## 💾 Data Storage
+
+The application uses **localStorage** to persist data:
+
+- **bills**: Array of saved bill records
+- **currentUser**: Currently logged-in user session
+- **userProfile**: User profile information
+- **lastCalculation**: Most recent calculation
+
+### Bill Object Structure
+```json
+{
+  "id": 1701234567890,
+  "kwh": 350,
+  "costPerKwh": 12.50,
+  "totalBill": 4375.00,
+  "month": "2025-12",
+  "reference": "REF001",
+  "date": "12/6/2025, 10:35:28 AM",
+  "status": "pending"
+}
 ```
 
-### 2. Orders with Customers
-```sql
-SELECT o.id, o.order_date, c.first_name, c.last_name
-FROM orders o
-JOIN customers c ON o.customer_id = c.id
-```
+## 🔐 Security Notes
 
-### 3. Order Items with Products
-```sql
-SELECT oi.id, p.product_name, oi.quantity, oi.price
-FROM order_items oi
-JOIN products p ON oi.product_id = p.id
-WHERE oi.order_id = ?
-```
+- **Client-Side Only**: All data is stored locally in the browser
+- **No Server Communication**: No data sent to external servers
+- **LocalStorage Limitations**: Data is cleared if browser history/cache is cleared
+- **For Production**: Implement proper backend authentication and database for real-world use
 
-## Troubleshooting
+## 📱 Responsive Breakpoints
 
-### Issue: "Connection failed: Unknown database"
-- **Solution:** Make sure you've run the `setup_database.sql` script in phpMyAdmin
+- **Desktop**: 1024px and above
+- **Tablet**: 768px - 1023px
+- **Mobile**: Below 768px
+- **Small Mobile**: Below 576px
 
-### Issue: Can't access phpMyAdmin
-- **Solution:** Make sure Apache and MySQL are started in XAMPP Control Panel
+## 🎯 JavaScript Functions
 
-### Issue: Pages show "0 results" or blank
-- **Solution:** Insert sample data through phpMyAdmin or add categories and products using the application
+### Calculator Functions
+- `calculateBill()`: Calculates electricity bill based on input
+- `saveBill()`: Saves calculated bill to localStorage
 
-### Issue: Connection to localhost failed
-- **Solution:** 
-  - Check MySQL is running in XAMPP
-  - Verify port 3306 is available
-  - Check `database.php` credentials
+### Authentication Functions
+- `handleLogin()`: Processes user login
+- `handleRegister()`: Creates new user account
+- `logout()`: Clears user session
 
-## Additional Notes
+### Dashboard Functions
+- `loadDashboardData()`: Loads and displays user statistics
+- `applyFilters()`: Filters bills by month, year, status
+- `displayFilteredBills()`: Renders filtered bills in table
 
-- All forms include HTML escaping to prevent XSS attacks
-- Prepared statements are used to prevent SQL injection
-- Foreign key constraints ensure data integrity
-- Transactions are used when creating orders (atomic operations)
-- Sample data is included in `setup_database.sql`
+### Utility Functions
+- `setDefaultMonth()`: Sets current month in date inputs
+- `formatMonth()`: Formats month string to readable format
+- `checkAuth()`: Verifies user authentication
 
-## Security Features
+## 🌐 Browser Support
 
-- Input validation on all forms
-- SQL injection prevention using prepared statements
-- XSS prevention using htmlspecialchars()
-- Confirmation dialogs for delete operations
-- Session management for messages and feedback
+- ✅ Chrome/Chromium 90+
+- ✅ Firefox 88+
+- ✅ Safari 14+
+- ✅ Edge 90+
 
-## Navigation
+## 📦 Dependencies
 
-The application includes a navigation bar for easy access:
-- **Products:** Main products list
-- **Categories:** Manage product categories
-- **Customers:** Manage customer information
-- **Orders:** View and manage orders
-- **+ Add Product:** Quick link to add products
+- **Bootstrap 5.3**: CDN-linked (no installation needed)
+- **Bootstrap Icons**: CDN-linked
+- **Google Fonts**: Pirata One & Montserrat (CDN-linked)
+- **Vanilla JavaScript**: No external libraries required
 
-Enjoy your Maano Database System!
+## 🚀 Future Enhancements
+
+- [ ] Backend integration for data persistence
+- [ ] User authentication with secure sessions
+- [ ] Database for bill history
+- [ ] PDF bill generation
+- [ ] Email notifications
+- [ ] Bill payment integration
+- [ ] Multiple user support
+- [ ] Bill analytics and charts
+- [ ] Mobile app version
+- [ ] Dark/Light theme toggle
+
+## 🤝 Contributing
+
+Feel free to fork, modify, and improve this project!
+
+## 📄 License
+
+This project is free to use and modify for personal and commercial purposes.
+
+## 👨‍💻 Author
+
+Created as a modern electric bill calculator application inspired by the Ngalis Electric Bill Calculator design patterns.
+
+## 📞 Support
+
+For issues or questions, please check the code comments or review the script.js file for detailed function documentation.
+
+---
+
+**Delator** - Making Electric Bill Calculation Simple and Beautiful ⚡
